@@ -1,0 +1,13 @@
+{
+  "jobs": {
+    "https://job1.com": {
+      "status": "NOTIFIED",
+      "last_seen": "2026-04-27",
+      "title": "Software Engineer"
+    },
+    "https://job2.com": {
+      "status": "DISCARDED",
+      "last_seen": "2026-04-27"
+    }
+  }
+}
