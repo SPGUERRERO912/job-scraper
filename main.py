@@ -1,57 +1,29 @@
 import json
-from modules.api_detector import detect_apis
+from endpoint_modules.api_detector import detect_apis
+from endpoint_modules.api_analyzer import analyze_api_endpoints
 import requests
 import google.generativeai as genai
+from dotenv import load_dotenv
 
-DEFAULT_HEADERS = {
-    "User-Agent": "Mozilla/5.0",
-    "Accept": "application/json"
-}
-
-def check_api_status(url):
-    try:
-        response = requests.get(url, headers=DEFAULT_HEADERS, timeout=10)
-
-        status_code = response.status_code
-
-        if status_code == 200:
-            return "OK (200)"
-        elif status_code == 401:
-            return "Unauthorized (401)"
-        elif status_code == 403:
-            return "Denied / Forbidden (403)"
-        elif status_code == 404:
-            return "Not Found (404)"
-        else:
-            return f"Other status ({status_code})"
-
-    except requests.exceptions.Timeout:
-        return "Timeout"
-    except requests.exceptions.ConnectionError:
-        return "Connection error"
-    except Exception as e:
-        return f"Error: {e}"
+load_dotenv()
 
 def main():
-    with open("config/websites.json") as f:
-        data = json.load(f)
+    # with open("config/websites.json") as f:
+    #     data = json.load(f)
 
-    for url in data["links_to_check"]:
-        print(f"\n Checking: {url}")
+    # for url in data["links_to_check"]:
+    #     print(f"\n Checking: {url}")
 
-        apis = detect_apis(url)
+    #     apis = detect_apis(url)
 
-        if not apis:
-            print("Not found any API endpoints.")
-        else:
-            for api in apis:
-                api_url = api["url"]
-                score = api["score"]
+    #     if not apis:
+    #         print("Not found any API endpoints.")
+    #     else:
+    #         print(f"Found {len(apis)} candidate API endpoints. Analyzing...")
+    #         results = analyze_api_endpoints(apis)
 
-                print(f"\n - Endpoint: {api_url} (score: {score})")
-
-                status = check_api_status(api_url)
-                print(f"   Status: {status}")
+    #         for res in results:
+    #             print(f"URL: {res['url']}\nScore: {res['score']}\nStatus: {res['status']}\n")
     
     # API KEY
     # API_KEY = ""
